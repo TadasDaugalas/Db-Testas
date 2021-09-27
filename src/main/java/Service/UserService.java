@@ -6,6 +6,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Updates;
 
 
@@ -15,7 +17,10 @@ public class UserService {
     MongoClient client = MongoClientProvider.getMongoClientWithCodec();
     MongoDatabase database = client.getDatabase("Transactions");
     MongoCollection<User> userMongoCollection = database.getCollection("User", User.class);
-
+    IndexOptions indexOptions = new IndexOptions().unique(true);
+//    public void createIndex(){
+//        userMongoCollection.createIndex(Indexes.descending("name"),indexOptions);
+//    }
     public void addUser(User user) {
         userMongoCollection.insertOne(user);
     }
